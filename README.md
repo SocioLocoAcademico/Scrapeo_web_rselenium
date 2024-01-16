@@ -83,9 +83,6 @@ selKeys <- list(
 rD <- rsDriver(browser = "firefox", chromever = NULL)
 remDr <- rD$client
 
-# Configurar el perfil en el navegador
-remDr$addFirefoxProfile(firefox_profile)
-
 # Entrar en la página que se desea
 remDr$navigate("PAGINA_WEB")
 
@@ -143,7 +140,7 @@ repeat {
     break 
 }
 
-# Este código lo sustituyo por el anterior if, para que rompa en aquellas páginas donde el número de reviews es inferior a 1300
+# Este código lo sustituyo por el anterior if, para que rompa en aquellas páginas donde el número de reviews es superior a 1300
 #if (length(reviews) >= maximum_lenght_reviews | (length(usuarios) > length(reviews))
 
 Sys.sleep(1)
@@ -153,8 +150,6 @@ tiempo_final_scroll <- Sys.time()
 
 # Calcular la duración del proceso
 duracion_scroll <- tiempo_final_scroll - tiempo_inicial_scroll
-
-print(duracion_scroll)
 
 # Capturar el tiempo al inicio del proceso
 
@@ -176,11 +171,10 @@ while (puede_realizar_accion) {
     
     webElem_mas_button <- remDr$findElement(using = "css selector", value = "button.w8nwRe")
     webElem_mas_button$clickElement()
-    reviews <- html_obj %>% html_elements("div.MyEned") %>% html_text()
     
   }, error = function(e) {
     
-    # Si se produce un error cuando no encuentra más, por lo que el bucle salta
+    # Se produce un error cuando no encuentra más, por lo que el bucle salta
     
     puede_realizar_accion <<- FALSE
   })
@@ -195,8 +189,6 @@ tiempo_final_abrir <- Sys.time()
 # Calcular la duración del proceso
 
 duracion_abrir <- tiempo_final_abrir - tiempo_inicial_abrir
-
-print(duracion_abrir)
 
 # Leemos toda la página de nuevo para recoger la info a scrapear
 
@@ -217,6 +209,7 @@ data <- data[1:length(reviews)]
 tabla_datos_FINAL <- data.frame(usuarios, data, reviews)
 
 # Crear un vector de fecha que corresponda al número de filas en 'Resultados'
+
 fecha_de_scrapeo <- rep(Sys.Date(), nrow(tabla_datos_FINAL))
 
 # Agregar el vector de fechas al data frame 'Resultados'
@@ -237,9 +230,9 @@ write.xlsx(tabla_datos_FINAL, "NUEVO.xlsx")
 tiempo_final <- Sys.time()
 
 # Calcular la duración del proceso
-duracion <- tiempo_final - tiempo_inicial
+duracion_total <- tiempo_final - tiempo_inicial
 
 # Imprimir la duración del último proceso
-print(duracion)
+print(duracion_total)
 print(duracion_scroll)
 print(duracion_abrir)
