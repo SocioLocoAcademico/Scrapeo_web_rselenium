@@ -1,5 +1,8 @@
-# Instalación de las librerías, una vez instaladas este proceso se puede omitir
-# Para omitir, o borrar o colocar # delante
+# Hola, se adjunta el código utilizado en una de las prácticas realizadas en la asignatura Investigación en Red, en el contexto del Master de Metodología de Investigación Social.
+
+# Espero que les sirva de base para futuras aplicaciones.
+
+Instalación de las librerías, una vez instaladas este proceso se puede omitirPara omitir, o borrar o colocar # delante
 
 installed.packages(RSelenium)
 installed.packages(tidyverse)
